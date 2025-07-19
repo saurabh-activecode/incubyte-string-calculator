@@ -46,15 +46,36 @@ The method "StringCalculator.add" is accessed via the 'calculate.rb'.
 
 'calculate.rb' accepts the relative path of the example text files as a console argument and prints the response back to the console.
 
+### Numbers with commas
 ```
+cat examples/numbers_with_comma.txt 
+1,2,3,4,5%                                 
+
 ruby calculate.rb examples/numbers_with_comma.txt
 
 15
 ```
 
+### Numbers with negatives
 ```
+cat examples/multiple_negative_numbers.txt
+
+1,2,3,-1,-2,-3%
+
 ruby calculate.rb examples/multiple_negative_numbers.txt 
 
 /string_calculator.rb:25:in 'StringCalculator.add': negative numbers not allowed: -1,-2,-3 (RuntimeError)
 	from calculate.rb:13:in '<main>'
+```
+
+### Custom delimited numbers
+```
+cat examples/custom_delimited_numbers.txt
+
+//;
+1;2;3;4;5%
+
+ruby calculate.rb examples/custom_delimited_numbers.txt 
+15
+
 ```
