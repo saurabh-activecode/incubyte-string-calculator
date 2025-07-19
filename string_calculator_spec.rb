@@ -9,6 +9,18 @@ RSpec.describe StringCalculator do
         expect(described_class.add("")).to eq(0)
         expect(described_class.add("   ")).to eq(0)
       end
+
+      it 'handles multiple commas without numbers' do
+        expect(described_class.add(",,,,,,")).to eq(0)
+      end
+
+      it 'handles multiple newlines without numbers' do
+        expect(described_class.add("\n\n\n\n")).to eq(0)
+      end
+
+      it 'handles multiple commas and newlines without numbers' do
+        expect(described_class.add("\n\n\n\n,,,,")).to eq(0)
+      end
     end
 
     context 'with default delimiters' do
@@ -25,6 +37,15 @@ RSpec.describe StringCalculator do
     end
 
     context 'with negative numbers' do
+      it 'raises an error listing all the negative numbers' do
+        expect {
+          described_class.add("1,-2,3,-4")
+        }.to raise_error("negative numbers not allowed: -2,-4")
+      end
+
+      it 'does not raise error if all numbers are non-negative' do
+        expect(described_class.add("1,2,3")).to eq(6)
+      end
     end
 
     context 'edge cases' do
