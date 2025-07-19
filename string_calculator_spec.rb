@@ -38,6 +38,11 @@ RSpec.describe StringCalculator do
     end
 
     context 'with custom delimiter' do
+      it 'uses a custom delimiter when specified' do
+        expect(described_class.add("//;\n1;2;3")).to eq(6)
+      end
+
+
     end
 
     context 'with negative numbers' do
@@ -50,6 +55,12 @@ RSpec.describe StringCalculator do
       it 'raises an error listing all the negative numbers with mixed delimiters' do
         expect {
           described_class.add("1,-2,3\n-4")
+        }.to raise_error("negative numbers not allowed: -2,-4")
+      end
+
+      it 'raises an error listing all the negative numbers with custom delimiter' do
+        expect {
+          described_class.add("//;\n1;-2;3;-4")
         }.to raise_error("negative numbers not allowed: -2,-4")
       end
 
