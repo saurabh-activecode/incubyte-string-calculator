@@ -31,6 +31,10 @@ RSpec.describe StringCalculator do
       it 'returns the sum of numbers separated by newlines' do
         expect(described_class.add("1\n2\n3")).to eq(6)
       end
+
+      it 'handles mixed comma and newline delimiters' do
+        expect(described_class.add("1\n2,3")).to eq(6)
+      end
     end
 
     context 'with custom delimiter' do
@@ -40,6 +44,12 @@ RSpec.describe StringCalculator do
       it 'raises an error listing all the negative numbers' do
         expect {
           described_class.add("1,-2,3,-4")
+        }.to raise_error("negative numbers not allowed: -2,-4")
+      end
+
+      it 'raises an error listing all the negative numbers with mixed delimiters' do
+        expect {
+          described_class.add("1,-2,3\n-4")
         }.to raise_error("negative numbers not allowed: -2,-4")
       end
 
